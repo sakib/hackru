@@ -1,0 +1,18 @@
+import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+SECRET_KEY = 'top secret'
+
+SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
+
+OAUTH_CREDENTIALS = {
+    'mlh': {
+        'id': '',
+        'secret': ''
+    }
+}
+
+UPLOAD_FOLDER = os.path.join(basedir, 'resumes')
+
+ALLOWED_EXTENSIONS = ['txt', 'pdf', 'doc', 'docx']
