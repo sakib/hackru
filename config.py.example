@@ -2,7 +2,7 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SECRET_KEY = 'top secret'
+SECRET_KEY = 'ayylmao'
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
 

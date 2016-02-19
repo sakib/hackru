@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Account</title>
+    </head>
+    <body>
+      {{var}}
+        <p>fill out some shit</p>
+        <form action="{{ url_for('account') }}" method="POST" enctype="multipart/form-data">
+            <p>
+                <label for="GitHub">GitHub: </label>
+                <input id="gitHub" name="github" value="{{ github }}" type="text"/>
+            </p>
+            <p>
+                <label for="Resume">Resume: </label>
+                <input type="hidden" name="MAX_FILE_SIZE" value=2048 /> <!-- 2MB limit -->
+                <input id="resume" name="resume" type="file"/>
+                <br>Must be TXT, PDF, DOC or DOCX
+            </p>
+            <p>
+                <label for="Comments">Comments </label>
+                <textarea rows="4" cols="50" placeholder="Anything you want us to know?" id="comments" name="comments" type="text">{{ comments }}</textarea>
+            </p>
+            <p>
+                <input type="submit" value="Submit" />
+            </p>
+        </form>
+        <a href="{{ url_for('dash') }}">Back to Dashboard</a>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+              {% for message in messages %}
+                <li> {{ message }} </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </body>
+</html>

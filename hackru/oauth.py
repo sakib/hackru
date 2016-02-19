@@ -1,6 +1,6 @@
 from rauth import OAuth1Service, OAuth2Service
 from flask import current_app, url_for, request, redirect, session
-import json
+import requests, json
 
 class OAuthSignIn(object):
     providers = None
@@ -62,9 +62,13 @@ class MLHSignIn(OAuthSignIn):
 
         return (
             me.get('data').get('id'),
-            me.get('data').get('email').split('@')[0],  # MyMLH does not provide
-                                                        # username, so the email's user
-                                                        # is used instead
+            me.get('data').get('first_name'),
             me.get('data').get('email')
         )
 
+    def get_users(self):
+        url = "https://my.mlh.io/api/v1/users?client_id={0}&secret={1}"\
+                .format(self.consumer_id,
+                        self.consumer_secret)
+        users = json.loads(requests.get(url)._content).get('data')
+        return users
