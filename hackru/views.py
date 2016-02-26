@@ -6,7 +6,7 @@ from oauth import OAuthSignIn
 from models import User
 from hackru import app, lm, db
 from werkzeug import secure_filename
-import os
+import os, logging
 
 
 @lm.user_loader
@@ -84,22 +84,7 @@ def account():
         # Upload file handling
         file = request.files['resume']
         if file:
-            if allowed_file(file.filename):
-                filename = str(current_user.mlh_id) + "_" + secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                current_user.resume = filename
-                db.session.commit()
-                # Delete old resume
-                path = os.path.abspath(app.config['UPLOAD_FOLDER'])
-                list = os.listdir(path)
-                for item in list:
-                    id = int(item.split('_')[0])
-                    if id == current_user.mlh_id and filename != item:
-                        os.remove(os.path.join(path, item))
-
-                flash("Successfully updated information!")
-            else:
-                flash("Invalid file type! Please upload a PDF, TXT, DOC, DOCX")
+            flash(upload_file_handler(file))
 
         return render_template('account.html',
                                 github=github,
@@ -136,3 +121,22 @@ def oauth_callback(provider):
 def allowed_file(filename):
     return '.' in filename and \
             filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+
+def upload_file_handler(file):
+    if allowed_file(file.filename):
+        filename = str(current_user.mlh_id) + "_" + secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        current_user.resume = filename
+        db.session.commit()
+        # Delete old resume
+        path = os.path.abspath(app.config['UPLOAD_FOLDER'])
+        list = os.listdir(path)
+        for item in list:
+            id = int(item.split('_')[0])
+            if id == int(current_user.mlh_id) and filename != item:
+                os.remove(os.path.join(path, item))
+
+        return "Successfully updated information!"
+    else:
+        return "Invalid file type! Please upload a PDF, TXT, DOC, DOCX"

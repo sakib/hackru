@@ -7,5 +7,7 @@ SQLAlchemy==0.9.8
 Werkzeug==0.9.6
 argparse==1.2.1
 itsdangerous==0.24
+logging==0.4.9.6
 rauth==0.7.0
 requests==2.4.3
+wsgiref==0.1.2
