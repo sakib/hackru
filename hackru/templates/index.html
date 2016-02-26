@@ -77,7 +77,9 @@ Front-end by PJ Rosa :: http://pjrosa.com
 
 						<div class="sign-up-btn">
                             {% for message in get_flashed_messages() %}
-                                <p><b>Error</b>: {{ message }}</p>
+                                <div class="landing-text">
+                                  <p><b>Error</b>: {{ message }}</p><br><br>
+                                </div>
                             {% endfor %}
                             {% if not current_user.is_authenticated %}
                                 <p><a href="{{ url_for('oauth_authorize', provider='mlh') }}">Login with MyMLH</a></p>

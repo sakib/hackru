@@ -44,10 +44,14 @@
                 <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
                     <p>Awesome, you're signed in with myMLH! Now we just a little bit more information about you.</p>
                     <div class="input-wrapper" label="Github Username">
-                        <input class="inpt normal" placeholder="">
+                      <input class="inpt normal" placeholder="{{ github }}">
                     </div>
                     <div class="btn-wrapper" label="Resume">
-                        <button class="btn small">Add</button>
+                        <!--button class="btn small">Add</button-->
+                        <input type="hidden" name="MAX_FILE_SIZE" value=2048" />
+                        <button class="btn small">
+                          <input id="resume" name="resume" type="file; hidden"/>
+                        </button>
                     </div>
                     <p>We participate in Major League Hacking (MLH) as a MLH Member Event. By accepting, you authorize us to share certain registration information for event administration, ranking, MLH administration, and occasional messages about hackathons in line with the <a href="https://mlh.io/privacy">MLH Privacy Policy.</a></p>
                     <div class="check-wrapper">
@@ -56,6 +60,9 @@
                             <label for="squaredThree"></label>
                         </div>
                         <p class="checkbox">I will at all times abide by and conform to the Major League Hacking <a href="http://static.mlh.io/docs/mlh-code-of-conduct.pdf">Code of Conduct</a> while at the event.</p>
+                        {% if error %}
+                          <p>{{ error }}</p>
+                        {% endif %}
                     </div>
                     <button class="btn" value="Submit" type="submit">Finish</button>
                 </form>

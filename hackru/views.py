@@ -43,7 +43,7 @@ def confirm():
         return render_template('confirm.html')
 
 
-@app.route('/register', methods=['GET'])
+@app.route('/register', methods=['GET', 'POST'])
 @login_required
 def register():
 
@@ -63,7 +63,7 @@ def register():
 
             if not 'check' in request.form: # User must check MLH box
                 return render_template('registration.html',
-                                    error=error)
+                                        error="Error: Must agree to Code of Conduct")
 
             github = request.form.get('github')
             comments = request.form.get('comments')
