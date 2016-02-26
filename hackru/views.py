@@ -43,6 +43,52 @@ def confirm():
         return render_template('confirm.html')
 
 
+@app.route('/register', methods=['GET'])
+@login_required
+def register():
+
+    if current_user.confirmed == 0:
+        if request.method == 'GET':
+            github = current_user.github
+            resume = current_user.resume
+            comments = current_user.comments
+            if github is None: github = ""
+            if comments is None: comments = ""
+            if resume is None: resume = ""
+            return render_template('registration.html',
+                                    github=github,
+                                    resume=resume,
+                                    comments=comments)
+        if request.method == 'POST':
+
+            if not 'check' in request.form: # User must check MLH box
+                return render_template('registration.html',
+                                    error=error)
+
+            github = request.form.get('github')
+            comments = request.form.get('comments')
+
+            if github is None: github = ""
+            else: current_user.github = github
+
+            if comments is None: comments = ""
+            else: current_user.comments = comments
+
+            # Set user to registered
+            if current_user.confirmed == 0:
+                current_user.confirmed = 1
+
+            # Upload file handling
+            file = request.files['resume']
+            if file:
+                flash(upload_file_handler(file))
+
+            return render_template('signup-good.html')
+
+    else:
+        return redirect(url_for('dash'))
+
+
 @app.route('/stats/<provider>', methods=['GET'])
 @login_required
 def stats(provider):
@@ -59,27 +105,24 @@ def stats(provider):
 def account():
     if request.method == 'GET':
         github = current_user.github
+        resume = current_user.resume
         comments = current_user.comments
         if github is None: github = ""
         if comments is None: comments = ""
+        if resume is None: resume = ""
         return render_template('account.html',
                                 github=github,
+                                resume=resume,
                                 comments=comments)
     if request.method == 'POST':
         github = request.form.get('github')
         comments = request.form.get('comments')
 
-        if github is None:
-            github = ""
-        else:
-            current_user.github = github
-            db.session.commit()
+        if github is None: github = ""
+        else: current_user.github = github
 
-        if comments is None:
-            comments = ""
-        else:
-            current_user.comments = comments
-            db.session.commit()
+        if comments is None: comments = ""
+        else: current_user.comments = comments
 
         # Upload file handling
         file = request.files['resume']
@@ -111,11 +154,16 @@ def oauth_callback(provider):
         return redirect(url_for('index'))
     user = User.query.filter_by(mlh_id=mlh_id).first()
     if not user:
+        # Create, add and login new user. Redirect to /register
         user = User(mlh_id=mlh_id, name=name, email=email)
         db.session.add(user)
         db.session.commit()
-    login_user(user, True)
-    return redirect(url_for('index'))
+        login_user(user, True)
+        return redirect(url_for('register'))
+    else:
+        # Login new user. Redirect to /
+        login_user(user, True)
+        return redirect(url_for('index'))
 
 
 def allowed_file(filename):
