@@ -90,6 +90,12 @@ Front-end by PJ Rosa :: http://pjrosa.com
 
 						</div>
 
+            <div class="sign-up-btn">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('logout') }}"> Logout </a>
+                {% endif %}
+            </div>
+
 					<!--
 						<input class="email-input" placeholder="Enter your email for updates!">
 						<a class="email-btn" href="#">Send Me Updates</a>

@@ -6,7 +6,7 @@ from oauth import OAuthSignIn
 from models import User
 from hackru import app, lm, db
 from werkzeug import secure_filename
-import os, logging
+import os
 
 
 @lm.user_loader
@@ -22,6 +22,8 @@ def index():
 @app.route('/logout')
 @login_required
 def logout():
+    app.logger.info("{}[{}] at {} logged out".format(
+        current_user.name, current_user.id, request.remote_addr))
     logout_user()
     return redirect(url_for('index'))
 
@@ -29,18 +31,52 @@ def logout():
 @app.route('/dashboard', methods=['GET'])
 @login_required
 def dash():
-    if request.method == 'GET':
-        return render_template('dashboard.html',
-                                name=current_user.name)
+    if current_user.confirmed > 0:
+        if request.method == 'GET':
+            return render_template('dashboard.html',
+                                    name=current_user.name)
+    else:
+        return redirect(url_for('register'))
 
 
-@app.route('/confirm', methods=['GET'])
+@app.route('/confirmstatus', methods=['GET'])
+@login_required
+def confirm_status():
+    if current_user.confirmed > 0:
+        if request.method == 'GET':
+            return render_template('change-confirming-status.html')
+    else:
+        return redirect(url_for('register'))
+
+
+@app.route('/confirmed', methods=['GET'])
 @login_required
 def confirm():
-    if request.method == 'GET':
-        current_user.confirmed = True
-        db.session.commit()
-        return render_template('confirm.html')
+    if current_user.confirmed > 0:
+        if request.method == 'GET':
+            if current_user.confirmed != 2:
+                current_user.confirmed = 2
+                db.session.commit()
+                app.logger.info("{}[{}] at {} confirmed attendance".format(
+                    current_user.name, current_user.id, request.remote_addr))
+            return render_template('confirmed.html')
+    else:
+        return redirect(url_for('register'))
+
+
+@app.route('/notattending', methods=['GET'])
+@login_required
+def not_attending():
+    if current_user.confirmed > 0:
+        if request.method == 'GET':
+            if current_user.confirmed != 3:
+                current_user.confirmed = 3
+                db.session.commit()
+                app.logger.info("{}[{}] at {} confirmed lack of attendance".format(
+                    current_user.name, current_user.id, request.remote_addr))
+            return render_template('not-attending.html')
+    else:
+        return redirect(url_for('register'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -63,7 +99,7 @@ def register():
 
             if not 'check' in request.form: # User must check MLH box
                 return render_template('registration.html',
-                                        error="Error: Must agree to Code of Conduct")
+                        error="Please agree to the Code of Conduct.")
 
             github = request.form.get('github')
             comments = request.form.get('comments')
@@ -75,13 +111,17 @@ def register():
             else: current_user.comments = comments
 
             # Set user to registered
-            if current_user.confirmed == 0:
-                current_user.confirmed = 1
+            current_user.confirmed = 1
 
             # Upload file handling
             file = request.files['resume']
             if file:
-                flash(upload_file_handler(file))
+                upload_file_handler(file)
+
+            db.session.commit()
+
+            app.logger.info("{}[{}] at {} registered successfully".format(
+                current_user.name, current_user.id, request.remote_addr))
 
             return render_template('signup-good.html')
 
@@ -103,37 +143,52 @@ def stats(provider):
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    if request.method == 'GET':
-        github = current_user.github
-        resume = current_user.resume
-        comments = current_user.comments
-        if github is None: github = ""
-        if comments is None: comments = ""
-        if resume is None: resume = ""
-        return render_template('account.html',
-                                github=github,
-                                resume=resume,
-                                comments=comments)
-    if request.method == 'POST':
-        github = request.form.get('github')
-        comments = request.form.get('comments')
 
-        if github is None: github = ""
-        else: current_user.github = github
+    print "nerds"
 
-        if comments is None: comments = ""
-        else: current_user.comments = comments
+    if current_user.confirmed > 0:
+        if request.method == 'GET':
+            github = current_user.github
+            resume = current_user.resume
+            comments = current_user.comments
+            if github is None: github = ""
+            if comments is None: comments = ""
+            if resume is None: resume = ""
+            return render_template('manage.html',
+                                    github=github,
+                                    resume=resume,
+                                    comments=comments)
+        if request.method == 'POST':
+            print "nerds!!!!!!!!!!!"
+            github = request.form.get('github')
+            comments = request.form.get('comments')
 
-        # Upload file handling
-        file = request.files['resume']
-        if file:
-            flash(upload_file_handler(file))
+            print github, comments
 
-        return render_template('account.html',
-                                github=github,
-                                comments=comments,
-                                filename=file.filename)
+            if github is None: github = ""
+            else: current_user.github = github
 
+            if comments is None: comments = ""
+            else: current_user.comments = comments
+
+            # Upload file handling
+            file = request.files['resume']
+            if file:
+                print "there's a file!!!"
+                flash(upload_file_handler(file))
+            else:
+                print "no file!!!"
+
+            db.session.commit()
+
+            app.logger.info("{}[{}] at {} updated account information".format(
+                current_user.name, current_user.id, request.remote_addr))
+
+            flash("Successfully updated account info!")
+
+            return redirect(url_for('dash'))
+    else:
+        return redirect(url_for('register'))
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
@@ -159,10 +214,14 @@ def oauth_callback(provider):
         db.session.add(user)
         db.session.commit()
         login_user(user, True)
+        app.logger.info("{}[{}] at {} logged in for the first time".format(
+            current_user.name, current_user.id, request.remote_addr))
         return redirect(url_for('register'))
     else:
         # Login new user. Redirect to /
         login_user(user, True)
+        app.logger.info("{}[{}] at {} logged in".format(
+            current_user.name, current_user.id, request.remote_addr))
         return redirect(url_for('index'))
 
 
@@ -176,7 +235,6 @@ def upload_file_handler(file):
         filename = str(current_user.mlh_id) + "_" + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         current_user.resume = filename
-        db.session.commit()
         # Delete old resume
         path = os.path.abspath(app.config['UPLOAD_FOLDER'])
         list = os.listdir(path)

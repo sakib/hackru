@@ -20,15 +20,15 @@
 		<nav>
 			<div class="container">
 				<ul class="logo">
-					<a href="./index.html#landing"><img src="./static/assets/img/hack-ru-logo-rel.svg"></a>
+					<a href="./#landing"><img src="./static/assets/img/hack-ru-logo-rel.svg"></a>
 				</ul>
 				<ul class="items">
 					<span class="divide">
-						<li><a href="./index.html#1">about</a></li>
-						<li><a href="./index.html#2">faq</a></li>
+						<li><a href="./#1">about</a></li>
+						<li><a href="./#2">faq</a></li>
 					</span>
-					<li><a href="./index.html#3">schedule</a></li>
-					<li><a href="./index.html#4">sponsors</a></li>
+					<li><a href="./#3">schedule</a></li>
+					<li><a href="./#4">sponsors</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -42,16 +42,45 @@
 		<section id="active-area">
 			<div class="main-container">
                 <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
-                    <p>Awesome, you're signed in with myMLH! Now we just a little bit more information about you.</p>
-                    <div class="input-wrapper" label="Github Username">
-                      <input class="inpt normal" placeholder="{{ github }}">
+                    <p>Awesome, you're signed in with myMLH! Now we just a little more information about you.</p>
+                    <div class="input-wrapper" label="Github">
+                      <input id="github" name="github" value="{{ github }}" class="inpt normal">
                     </div>
+
+                    <style type="text/css">
+                        .fileUpload {
+                            position: relative;
+                            overflow: hidden;
+                            margin: 10px;
+                            background-color: #BDBDBD;
+                            height: 40px;
+                            width: 200px;
+                            text-align: center;
+                        }
+
+                        .fileUpload input.resume {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            margin: 0;
+                            padding: 0;
+                            font-size: 20px;
+                            cursor: pointer;
+                            opacity: 0;
+                            filter: alpha(opacity=0);
+                            height: 100%;
+                            text-align: center;
+                        }
+                    </style>
+
                     <div class="btn-wrapper" label="Resume">
-                        <!--button class="btn small">Add</button-->
                         <input type="hidden" name="MAX_FILE_SIZE" value=2048" />
-                        <button class="btn small">
-                          <input id="resume" name="resume" type="file; hidden"/>
-                        </button>
+                        <!--button class="btn small">
+                        </button-->
+
+                          <input id="resume" name="resume" type="file"/>
+
+
                     </div>
                     <p>We participate in Major League Hacking (MLH) as a MLH Member Event. By accepting, you authorize us to share certain registration information for event administration, ranking, MLH administration, and occasional messages about hackathons in line with the <a href="https://mlh.io/privacy">MLH Privacy Policy.</a></p>
                     <div class="check-wrapper">
@@ -61,7 +90,7 @@
                         </div>
                         <p class="checkbox">I will at all times abide by and conform to the Major League Hacking <a href="http://static.mlh.io/docs/mlh-code-of-conduct.pdf">Code of Conduct</a> while at the event.</p>
                         {% if error %}
-                          <p>{{ error }}</p>
+                        <p><b>{{ error }}</b></p>
                         {% endif %}
                     </div>
                     <button class="btn" value="Submit" type="submit">Finish</button>

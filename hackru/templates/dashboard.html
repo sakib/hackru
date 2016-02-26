@@ -24,32 +24,49 @@
 				</ul>
 				<ul class="items">
 					<span class="divide">
-						<li><a href="./index.html#1">about</a></li>
-						<li><a href="./index.html#2">faq</a></li>
+						<li><a href="./#1">about</a></li>
+						<li><a href="./#2">faq</a></li>
 					</span>
-					<li><a href="./index.html#3">schedule</a></li>
-					<li><a href="./index.html#4">sponsors</a></li>
+					<li><a href="./#3">schedule</a></li>
+					<li><a href="./#4">sponsors</a></li>
 				</ul>
 			</div>
 		</nav>
 		<section id="main">
 			<div class="banner" style="background-image: url('./static/assets/img/faq.jpg')">
 				<div class="wrapper faq">
-					<h1>Dashboard</h1>
+          <h1>{{ current_user.name }}'s Dashboard</h1>
 				</div>
 			</div>
 		</section>
 		<section id="active-area">
 			<div class="main-container">
-				<h1>Currently: Attending HackRU Spring 2016</h1>
-				
+
+        <h1>Status:
+        {% if current_user.confirmed == 1 %}
+          Unconfirmed Attendance
+        {% elif current_user.confirmed == 2 %}
+          Confirmed Attendance! :)
+        {% elif current_user.confirmed == 3 %}
+          Not attending :(
+        {% endif %}
+        </h1>
+
 				<p>Need to change your information?</p>
-				<button class="btn" style="margin-top: -25px;">Manage Account</button>
+        <a href="{{ url_for('account') }}">
+          <button class="btn" style="margin-top: -25px;">Manage Account</button>
+        </a>
 				<br>
 				<br>
-				<p>Need to change your information?</p>
-				<button class="btn" style="margin-top: -25px;">Change Confirmation Status</button>
-			
+				<p>Confirm or unconfirm your attendance!</p>
+        <a href="{{ url_for('confirm_status') }}">
+          <button class="btn" style="margin-top: -25px;">Change Confirmation Status</button>
+			  </a>
+
+        {% for message in get_flashed_messages() %}
+        <p><h1>{{ message }} </h1></p>
+          {% endfor %}
+
 			</div>
 		</section>
 	</body>
