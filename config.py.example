@@ -4,7 +4,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 SECRET_KEY = 'hackru'
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///../db.sqlite'
+SQLALCHEMY_DATABASE_URI = ''
 
 OAUTH_CREDENTIALS = {
     'mlh': {
@@ -19,4 +19,4 @@ LOG_FILENAME = ""
 
 LOG_FORMAT = ""
 
-ALLOWED_EXTENSIONS = ['txt', 'pdf', 'doc', 'docx']
+ALLOWED_EXTENSIONS = []
