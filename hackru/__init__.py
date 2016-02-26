@@ -9,13 +9,15 @@ app = Flask(__name__)
 app.config.from_pyfile('../config.py')
 
 db = SQLAlchemy(app)
+db.create_all()
 
 lm = LoginManager(app)
 lm.login_view = 'index'
 
-handler = logging.FileHandler(app.config["LOG_FILENAME"])
-handler.setLevel(logging.INFO)
-handler.setFormatter(logging.Formatter(app.config["LOG_FORMAT"]))
-app.logger.addHandler(handler)
+if not app.debug:
+    handler = logging.FileHandler(app.config["LOG_FILENAME"])
+    handler.setFormatter(logging.Formatter(app.config["LOG_FORMAT"]))
+    handler.setLevel(logging.INFO)
+    app.logger.addHandler(handler)
 
 from views import *

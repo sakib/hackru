@@ -115,8 +115,8 @@ def register():
 
             # Upload file handling
             file = request.files['resume']
-            if file:
-                upload_file_handler(file)
+            if file: flash(upload_file_handler(file))
+            else: flash("Successfully updated account info!")
 
             db.session.commit()
 
@@ -144,8 +144,6 @@ def stats(provider):
 @login_required
 def account():
 
-    print "nerds"
-
     if current_user.confirmed > 0:
         if request.method == 'GET':
             github = current_user.github
@@ -159,11 +157,8 @@ def account():
                                     resume=resume,
                                     comments=comments)
         if request.method == 'POST':
-            print "nerds!!!!!!!!!!!"
             github = request.form.get('github')
             comments = request.form.get('comments')
-
-            print github, comments
 
             if github is None: github = ""
             else: current_user.github = github
@@ -173,22 +168,18 @@ def account():
 
             # Upload file handling
             file = request.files['resume']
-            if file:
-                print "there's a file!!!"
-                flash(upload_file_handler(file))
-            else:
-                print "no file!!!"
+            if file: flash(upload_file_handler(file))
+            else: flash("Successfully updated account info!")
 
             db.session.commit()
 
             app.logger.info("{}[{}] at {} updated account information".format(
                 current_user.name, current_user.id, request.remote_addr))
 
-            flash("Successfully updated account info!")
-
             return redirect(url_for('dash'))
     else:
         return redirect(url_for('register'))
+
 
 @app.route('/authorize/<provider>')
 def oauth_authorize(provider):
