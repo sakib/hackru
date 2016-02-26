@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+	<!--Connie is the best. She wasn't here-->
+
+	<head lang="en">
+		<meta name="description" content="Sign up for Rutgers University Spring 2016 hackathon, HackRU! April 16th to 17th.">
+		<meta name="title" content="HackRU">
+		<meta property="og:title" content="HackRU Spring 2016"/>
+		<meta property="og:description" content="Get hyped for the best hackathon Rutgers has to offer! HackRU's 10th hackathon is coming this Spring 2016! April 16th to 17th."/>
+		<meta property="og:image" content="http://yuzu.s-ul.eu/CafRwagJ"/>
+		<link href="./static/assets/icon/fav.png" rel="shortcut icon" type="image/png"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+		<link href='./static/stylesheets/sign-up.css' rel='stylesheet' type="text/css">
+	</head>
+	<body>
+		<nav>
+			<div class="container">
+				<ul class="logo">
+					<a href="./index.html#landing"><img src="./static/assets/img/hack-ru-logo-rel.svg"></a>
+				</ul>
+				<ul class="items">
+					<span class="divide">
+						<li><a href="./index.html#1">about</a></li>
+						<li><a href="./index.html#2">faq</a></li>
+					</span>
+					<li><a href="./index.html#3">schedule</a></li>
+					<li><a href="./index.html#4">sponsors</a></li>
+				</ul>
+			</div>
+		</nav>
+		<section id="main">
+			<div class="banner" style="background-image: url('./static/assets/img/faq.jpg')">
+				<div class="wrapper faq">
+					<h1>Registration</h1>
+				</div>
+			</div>
+		</section>
+		<section id="active-area">
+			<div class="main-container">
+                <form action="{{ url_for('register') }}" method="POST" enctype="multipart/form-data">
+                    <p>Awesome, you're signed in with myMLH! Now we just a little bit more information about you.</p>
+                    <div class="input-wrapper" label="Github Username">
+                        <input class="inpt normal" placeholder="">
+                    </div>
+                    <div class="btn-wrapper" label="Resume">
+                        <button class="btn small">Add</button>
+                    </div>
+                    <p>We participate in Major League Hacking (MLH) as a MLH Member Event. By accepting, you authorize us to share certain registration information for event administration, ranking, MLH administration, and occasional messages about hackathons in line with the <a href="https://mlh.io/privacy">MLH Privacy Policy.</a></p>
+                    <div class="check-wrapper">
+                        <div class="squaredThree">
+                            <input type="checkbox" value="None" id="squaredThree" name="check" />
+                            <label for="squaredThree"></label>
+                        </div>
+                        <p class="checkbox">I will at all times abide by and conform to the Major League Hacking <a href="http://static.mlh.io/docs/mlh-code-of-conduct.pdf">Code of Conduct</a> while at the event.</p>
+                    </div>
+                    <button class="btn" value="Submit" type="submit">Finish</button>
+                </form>
+			</section>
+		</body>
+		</html>

@@ -1,0 +1,494 @@
+/* line 26, ../sass/sign-up.sass */
+* {
+  margin: 0px;
+  padding: 0px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 32, ../sass/sign-up.sass */
+html {
+  background-color: #eaeaea;
+}
+
+/* line 34, ../sass/sign-up.sass */
+#main {
+  margin-top: 50px;
+}
+
+/* line 36, ../sass/sign-up.sass */
+button {
+  background: none;
+  border: 0px;
+}
+
+/* line 39, ../sass/sign-up.sass */
+textarea, input {
+  border: 0px;
+  padding-left: 20px;
+  font-family: "Work Sans";
+  outline: none;
+}
+
+/* line 44, ../sass/sign-up.sass */
+line, nav {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* line 46, ../sass/sign-up.sass */
+nav {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  background-color: #dd2626;
+  height: 75px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  font-family: "Work Sans";
+  font-weight: 300;
+}
+/* line 59, ../sass/sign-up.sass */
+nav .logo {
+  margin: 0 auto;
+  transition: opacity 0.2s ease-in-out;
+  height: 75px;
+  width: 150px;
+}
+@media only screen and (max-width: 720px) {
+  /* line 59, ../sass/sign-up.sass */
+  nav .logo {
+    margin-left: 40%;
+    opacity: 0;
+    position: fixed;
+  }
+}
+/* line 68, ../sass/sign-up.sass */
+nav .logo img {
+  margin: 0 auto;
+  height: 106px;
+  width: 160px;
+}
+/* line 72, ../sass/sign-up.sass */
+nav .logo a {
+  padding-top: 5px;
+  position: absolute;
+  height: 75px;
+  transition: all 0.2s ease-in-out;
+}
+/* line 77, ../sass/sign-up.sass */
+nav .logo a:hover {
+  transform: scale(1.025);
+}
+/* line 79, ../sass/sign-up.sass */
+nav .items {
+  height: 75px;
+  float: right;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 20;
+  transition: all 0.2s ease-in-out;
+}
+@media only screen and (max-width: 950px) {
+  /* line 88, ../sass/sign-up.sass */
+  nav .items .divide {
+    left: 0;
+    position: fixed;
+    display: inline-block;
+  }
+}
+@media only screen and (max-width: 720px) {
+  /* line 93, ../sass/sign-up.sass */
+  nav .items .divide {
+    left: auto;
+    position: relative;
+    display: block;
+  }
+}
+@media only screen and (max-width: 720px) {
+  /* line 79, ../sass/sign-up.sass */
+  nav .items {
+    width: 100%;
+  }
+}
+/* line 99, ../sass/sign-up.sass */
+nav .items li {
+  display: inline-block;
+  transition: all 0.2s ease-in-out;
+}
+@media only screen and (max-width: 720px) {
+  /* line 99, ../sass/sign-up.sass */
+  nav .items li {
+    width: 25%;
+    float: left;
+  }
+}
+/* line 105, ../sass/sign-up.sass */
+nav .items li a {
+  line-height: 74px;
+  height: 100%;
+  padding: 0 20px;
+  float: right;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
+  transition: all 0.2s ease-in-out;
+}
+@media only screen and (max-width: 720px) {
+  /* line 105, ../sass/sign-up.sass */
+  nav .items li a {
+    font-size: 0.9em;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+/* line 119, ../sass/sign-up.sass */
+nav .items li a:hover {
+  color: #ffc933;
+  background-color: rgba(186, 29, 29, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* line 123, ../sass/sign-up.sass */
+.banner {
+  height: 270px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 45px;
+  position: relative;
+}
+/* line 130, ../sass/sign-up.sass */
+.banner:after {
+  height: 270px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  content: "";
+  background-color: rgba(216, 31, 31, 0.7);
+}
+/* line 138, ../sass/sign-up.sass */
+.banner .icon {
+  display: block;
+  position: relative;
+  z-index: 10;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 144, ../sass/sign-up.sass */
+.banner .wrapper {
+  width: 100%;
+  height: 190px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 149, ../sass/sign-up.sass */
+.banner h1 {
+  position: relative;
+  z-index: 10;
+  color: white;
+  font-family: "Montserrat";
+  font-size: 3.0625em;
+  text-align: center;
+  padding-top: 60px;
+}
+@media only screen and (max-width: 570px) {
+  /* line 149, ../sass/sign-up.sass */
+  .banner h1 {
+    transition: padding-top 0.2s ease-in-out, font-size 0.2s ease-in-out;
+    padding-top: 70px;
+    font-size: 2em;
+  }
+}
+
+/* line 162, ../sass/sign-up.sass */
+.red-fill {
+  background-color: rgba(181, 22, 22, 0.7);
+  width: 100%;
+  height: 100%;
+  min-height: 680px;
+  position: absolute;
+  z-index: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* line 170, ../sass/sign-up.sass */
+#active-area {
+  height: 100%;
+  padding: 50px 10px;
+}
+/* line 173, ../sass/sign-up.sass */
+#active-area a {
+  color: #dd2626;
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #dd2626;
+  transition: color 0.2s ease-in-out;
+}
+/* line 179, ../sass/sign-up.sass */
+#active-area a:hover {
+  color: #a51717;
+}
+
+/* line 181, ../sass/sign-up.sass */
+.inpt {
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #d3d3d3;
+  color: #f43434;
+}
+
+/* line 189, ../sass/sign-up.sass */
+.input-wrapper {
+  height: 45px;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 45px auto;
+  position: relative;
+}
+/* line 196, ../sass/sign-up.sass */
+.input-wrapper::after {
+  content: attr(label);
+  height: 20px;
+  width: 100%;
+  position: absolute;
+  color: #f43434;
+  font-size: 14px;
+  font-family: "Work Sans";
+  top: -24px;
+  left: 0;
+}
+
+/* line 206, ../sass/sign-up.sass */
+.btn-wrapper {
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: 45px;
+  margin-bottom: 30px;
+}
+/* line 214, ../sass/sign-up.sass */
+.btn-wrapper::after {
+  content: attr(label);
+  height: 20px;
+  width: 100px;
+  position: absolute;
+  color: #f43434;
+  font-size: 14px;
+  font-family: "Work Sans";
+  text-align: left;
+  top: -24px;
+  left: 0;
+}
+
+/* line 225, ../sass/sign-up.sass */
+.btn {
+  margin: 0 auto;
+  margin-bottom: 30px;
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  height: 45px;
+  border-radius: 8px;
+  color: white;
+  transition: border 0.2s ease-in-out, color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  background-color: #dd2626;
+  font-size: 16px;
+  font-family: "Work Sans";
+  border: 3px solid #dd2626;
+}
+/* line 240, ../sass/sign-up.sass */
+.btn:hover {
+  color: #dd2626;
+  background-color: rgba(181, 22, 22, 0);
+}
+
+/* line 243, ../sass/sign-up.sass */
+.small {
+  width: 100px;
+  height: 30px;
+  font-size: 12px;
+  left: 0;
+  float: left;
+  position: relative;
+}
+
+/* line 250, ../sass/sign-up.sass */
+input {
+  border-radius: 8px;
+  border: 0px solid #BFBFBF;
+  transition: border 0.2s ease-in-out;
+}
+/* line 254, ../sass/sign-up.sass */
+input:focus {
+  border: 3px solid #BFBFBF;
+}
+
+/* line 256, ../sass/sign-up.sass */
+p {
+  line-height: 1.5em;
+  font-size: 0.9em;
+  color: #dd2626;
+  font-family: "Work Sans";
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+/* line 263, ../sass/sign-up.sass */
+h1 {
+  text-align: center;
+  font-size: 1.7em;
+  font-family: "Montserrat";
+  padding-bottom: 40px;
+  color: #dd2626;
+}
+
+/* line 269, ../sass/sign-up.sass */
+.main-container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+}
+@media only screen and (max-width: 570px) {
+  /* line 269, ../sass/sign-up.sass */
+  .main-container {
+    width: 100%;
+    max-wdith: 100%;
+  }
+}
+
+/* line 276, ../sass/sign-up.sass */
+.green {
+  background-color: #1e9e3a;
+  border-color: #1e9e3a;
+}
+/* line 279, ../sass/sign-up.sass */
+.green:hover {
+  background-color: rgba(30, 158, 58, 0);
+  color: #1e9e3a;
+}
+
+/* line 282, ../sass/sign-up.sass */
+.check-wrapper {
+  width: 100%;
+}
+
+/* line 284, ../sass/sign-up.sass */
+input[type=checkbox] {
+  visibility: hidden;
+}
+
+/* line 286, ../sass/sign-up.sass */
+.checkbox {
+  margin: 0 auto;
+  width: 460px;
+  height: auto;
+  padding-left: 20px;
+  display: inline-block;
+  text-align: left;
+}
+@media only screen and (max-width: 570px) {
+  /* line 286, ../sass/sign-up.sass */
+  .checkbox {
+    width: 100%;
+    display: block;
+    text-align: center;
+  }
+}
+
+/* line 297, ../sass/sign-up.sass */
+.squaredThree {
+  width: 20px;
+  top: -12px;
+  margin: 0px auto;
+  position: relative;
+  display: inline-block;
+  left: -10px;
+}
+@media only screen and (max-width: 570px) {
+  /* line 297, ../sass/sign-up.sass */
+  .squaredThree {
+    display: block;
+  }
+}
+
+/* line 306, ../sass/sign-up.sass */
+.squaredThree label {
+  cursor: pointer;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  top: 0;
+  background-color: #d3d3d3;
+  border-radius: 4px;
+  border: 3px solid #BFBFBF;
+  transition: border-color 0.2s ease-in-out;
+}
+
+/* line 317, ../sass/sign-up.sass */
+.squaredThree label:hover {
+  border: 3px solid #9d9d9d;
+}
+
+/* line 320, ../sass/sign-up.sass */
+.squaredThree label:after {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  opacity: 0;
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 4px;
+  background: transparent;
+  top: 4px;
+  left: 4px;
+  border: 3px solid #dd2626;
+  border-top: none;
+  border-right: none;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* line 343, ../sass/sign-up.sass */
+.squaredThree label:hover::after {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity=30);
+  opacity: 0.3;
+}
+
+/* line 348, ../sass/sign-up.sass */
+.squaredThree input[type=checkbox]:checked + label:after {
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  opacity: 1;
+  border-color: 3px solid #898989;
+}
+
+/* line 354, ../sass/sign-up.sass */
+img {
+  height: 75px;
+  display: block;
+  margin: 20px auto;
+}
+
+/* line 358, ../sass/sign-up.sass */
+::selection {
+  background-color: #ffc933;
+  color: #f43434;
+}
