@@ -58,10 +58,11 @@
         </a>
 				<br>
 				<br>
+				<!--p>Check back with us later to confirm your attendance!</p-->
 				<p>Confirm or unconfirm your attendance!</p>
         <a href="{{ url_for('confirm_status') }}">
           <button class="btn" style="margin-top: -25px;">Change Confirmation Status</button>
-			  </a>
+        </a>
 
         {% for message in get_flashed_messages() %}
         <p><h1>{{ message }} </h1></p>
