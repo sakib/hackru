@@ -1,0 +1,6 @@
+*.pyc
+resumes/*
+venv
+venv/*
+db.sqlite
+*.log

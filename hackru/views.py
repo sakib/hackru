@@ -101,8 +101,15 @@ def register():
                 return render_template('registration.html',
                         error="Please agree to the Code of Conduct.")
 
-            github = request.form.get('github')
-            comments = request.form.get('comments')
+	    if request.form:
+            	github = request.form.get('github')
+            	comments = request.form.get('comments')
+
+	    """ for load testing
+	    elif request.json:
+		github = request.json.get('github')
+		comments = request.json.get('comments')
+	    """
 
             if github is None: github = ""
             else: current_user.github = github
@@ -157,8 +164,16 @@ def account():
                                     resume=resume,
                                     comments=comments)
         if request.method == 'POST':
-            github = request.form.get('github')
-            comments = request.form.get('comments')
+
+	    if request.form:
+            	github = request.form.get('github')
+            	comments = request.form.get('comments')
+
+	    """ For load testing
+	    elif request.json:
+		github = request.json.get('github')
+		comments = request.json.get('comments')
+	    """
 
             if github is None: github = ""
             else: current_user.github = github
@@ -223,6 +238,11 @@ def allowed_file(filename):
 
 def upload_file_handler(file):
     if allowed_file(file.filename):
+        # Validate file size just in case
+        file.seek(0, os.SEEK_END)
+        if file.tell() > 2 * 1024 * 1024:
+            return "File too large! Maximum file size is 2 MB."
+        # Save file
         filename = str(current_user.mlh_id) + "_" + secure_filename(file.filename)
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         current_user.resume = filename
@@ -237,3 +257,19 @@ def upload_file_handler(file):
         return "Successfully updated information!"
     else:
         return "Invalid file type! Please upload a PDF, TXT, DOC, DOCX"
+
+""" Dummy route for load testing
+@app.route('/test', methods=["POST"])
+def test():
+    if request.method == 'POST':
+    	email = request.json.get("email")
+    	mlh_id = request.json.get("mlh_id")
+    	name = request.json.get("name")
+    	user = User(mlh_id=mlh_id, name=name, email=email)
+   	db.session.add(user)
+   	db.session.commit()
+   	login_user(user, True)
+    	return render_template('index.html')
+    else:
+	return render_template('index.html')
+"""
