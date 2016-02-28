@@ -258,6 +258,7 @@ def upload_file_handler(file):
     else:
         return "Invalid file type! Please upload a PDF, TXT, DOC, DOCX"
 
+
 """ Dummy route for load testing
 @app.route('/test', methods=["POST"])
 def test():
