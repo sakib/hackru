@@ -1,4 +1,5 @@
 *.pyc
+resumes/
 resumes/*
 venv
 venv/*
