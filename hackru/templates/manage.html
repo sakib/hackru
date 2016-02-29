@@ -2,7 +2,7 @@
 <html>
 <head>
 
-<!--Connie is the best. She wasn't here-->
+	<!--Connie is the best. She wasn't here-->
 
 	<head lang="en">
 		<meta name="description" content="Sign up for Rutgers University Spring 2016 hackathon, HackRU! April 16th to 17th.">
@@ -10,17 +10,22 @@
 		<meta property="og:title" content="HackRU Spring 2016"/>
 		<meta property="og:description" content="Get hyped for the best hackathon Rutgers has to offer! HackRU's 10th hackathon is coming this Spring 2016! April 16th to 17th."/>
 		<meta property="og:image" content="http://yuzu.s-ul.eu/CafRwagJ"/>
-		<link href="./static/assets/icon/fav.png" rel="shortcut icon" type="image/png"/>
+		<link href="../static/assets/icon/fav.png" rel="shortcut icon" type="image/png"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href='https://fonts.googleapis.com/css?family=Work+Sans' rel='stylesheet' type='text/css'>
 		<link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
-		<link href='./static/stylesheets/sign-up.css' rel='stylesheet' type="text/css">
+		<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link href='../static/stylesheets/sign-up.css' rel='stylesheet' type="text/css">
+
+		<script type="text/javascript" src="../static/js/bootstrap-filestyle.min.js"></script>
 	</head>
 	<body>
 		<nav>
 			<div class="container">
 				<ul class="logo">
-					<a href="./#landing"><img src="./static/assets/img/hack-ru-logo-rel.svg"></a>
+					<a href="./#landing"><img src="../static/assets/img/hack-ru-logo-rel.svg"></a>
 				</ul>
 				<ul class="items">
 					<span class="divide">
@@ -33,7 +38,7 @@
 			</div>
 		</nav>
 		<section id="main">
-			<div class="banner" style="background-image: url('./static/assets/img/faq.jpg')">
+			<div class="banner" style="background-image: url('../static/assets/img/faq.jpg')">
 				<div class="wrapper faq">
 					<h1>Manage Account</h1>
 				</div>
@@ -42,27 +47,38 @@
 		<section id="active-area">
 			<div class="main-container">
 
-        <form action="{{ url_for('account') }}" method="POST" enctype="multipart/form-data">
+				<form action="{{ url_for('account') }}" method="POST" enctype="multipart/form-data">
 
-          <div class="input-wrapper" label="Github">
-            <input id="github" name="github" class="inpt normal" value="{{ github }}" type="text" />
-          </div>
+					<div class="input-wrapper" label="Github Username">
+						<input id="github" name="github" class="inpt normal" value="{{ github }}" type="text" />
+					</div>
 
-          <div class="btn-wrapper" label="Resume">
-            <!--button class="btn small">Upload</button-->
-            <input type="hidden" name="MAX_FILE_SIZE" value=2048 /> <!-- 2MB limit -->
-            <input id="resume" name="resume" type="file"/>
-          </div>
+					<div class="btn-wrapper" label="Resume">
+						<input type="hidden" name="MAX_FILE_SIZE" value=2048 /><!-- 2MB limit -->
+						<input id="resume" type="file" class="filestyle" name="resume" data-placeholder="{{ resume }}" data-buttonBefore="true"/>
+            <p class="fine-print">Upload a .pdf, .txt, .doc or .docx &lt; 2MB.</p>
 
-          <button class="btn" value="Submit" type="submit">Save</button>
+					</div>
 
-        </form>
+          {% if error %}
+            {{ error }}
+          {% endif %}
 
-        <a href="{{ url_for('dash') }}">
-          <button class="btn">Back</button>
-        </a>
+          <br>
+					<button class="btn-ru" value="Submit" type="submit">Save</button>
 
+				</form>
+
+				<a href="{{ url_for('dash') }}">
+					<button class="btn-ru">Back</button>
+				</a>
 			</div>
 		</section>
+				<script type="text/javascript">
+			$(":file").filestyle({
+				placeholder: "{{ resume }}",
+				buttonBefore: true
+			});
+		</script>
 	</body>
 	</html>

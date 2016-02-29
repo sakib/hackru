@@ -20,6 +20,7 @@ $med: "only screen and (max-width : 720px)"
 $med-large: "only screen and (max-width : 950px)"
 $small: "only screen and (max-width : 570px)"
 $very-short: "only screen and (max-height : 570px)"
+$short-med: "only screen and (max-height : 720px)"
 $short: "only screen and (max-height : 800px)"
 $short-long: "only screen and (max-height : 900px)"
 $short-break: "only screen and (max-width : 900px)"
@@ -265,7 +266,7 @@ nav
 				@media #{$small}
 					font-size: 8vw
 				@media #{$very-short}
-					font-size: 5.5vh
+					font-size: 5vh
 			&:nth-child(3)
 				font-weight: 700
 				font-size: 1.5em
@@ -274,13 +275,14 @@ nav
 				@media #{$very-short}
 					font-size: 4vh
 	.sign-up
+		white-space: nowrap
 		margin-top: 4.6%
 		@media #{$med}
 			margin-top: 10%
 		@media #{$short}
 			margin-top: 6vh
 		@media #{$very-short}
-			margin-top: 4vh
+			margin-top: 0vh
 		.email-btn
 			margin-left: 5px
 			background-color: $yellow
@@ -341,6 +343,8 @@ nav
 			z-index: 15
 			@media #{$small}
 				margin-bottom: 2%
+			@media #{$very-short}
+				display: inline-block
 			a
 				display: inline-block
 				margin-left: auto
@@ -353,12 +357,15 @@ nav
 				background-color: $yellow
 				border-radius: 8px
 				text-decoration: none
-				line-height: 46px
+				line-height: 44px
 				border: 3px solid $yellow
-				transition: all 0.2s ease-in-out
+				transition: all .2s ease-in-out
 				@media #{$very-short}
-					max-width: 50vh
-					min-width: 234px
+					height: auto
+					width: auto
+					padding: .25vh 5vh
+					font-size: 3vh
+					min-width: auto
 				.svg
 					path, rect
 						stroke-width: 0
@@ -370,8 +377,6 @@ nav
 					.svg
 						path, rect
 							fill: $yellow
-				img
-					margin-right: 10px
 		.inactive
 			a
 				pointer-events: none
@@ -410,6 +415,9 @@ nav
 					padding: 10px 0
 					transition: all 0.2s ease-in-out
 					@media #{$small}
+						opacity: 0
+						pointer-events: none
+					@media #{$short-med}
 						opacity: 0
 						pointer-events: none
 					@media #{$very-short}
@@ -478,7 +486,6 @@ nav
 	.text-box
 		height: auto
 		width: 100%
-		max-width: 595px
 		padding: 50px 50px
 		display: inline-block
 		color: white
@@ -495,6 +502,8 @@ nav
 			font-size: 2.0625em
 			margin-bottom: 10px
 		p
+			margin: 0 auto
+			max-width: 595px
 			font-family: $body
 			font-size: 1.1em
 			line-height: 22.35px
@@ -504,13 +513,22 @@ nav
 	@media #{$ichi}
 		.container
 			max-width: 595px
+	.map
+		width: 100%
+		max-width: 595px
+		margin: 0 auto
+		margin-bottom: 50px
+		iframe
+			width: 100%
+			border: 1px solid $fadedwhite
+			
 
 .btn-wrapper
 	width: 100%
 	.btn
 		display: block
 		width: 100%
-		height: 48px
+		height: auto
 		a
 			display: block
 			width: 85%
@@ -532,15 +550,13 @@ nav
 				height: 18px
 				display: inline-block
 				width: 12px
-				@media #{$small}
-					width: 8px
 				polygon, path, rect
 					fill: $red
 					transition: all 0.2s ease-in-out
 			@media #{$small}
 				width: 90%
 				padding: 3vw 0vw
-				font-size: 5vw
+				font-size: 4vw
 			&:hover
 				color: $yellow
 				background-color: rgba(0, 0, 0, 0)
@@ -549,7 +565,7 @@ nav
 						fill: $yellow
 
 .subtext
-	margin-top: 10px
+	margin-top: 20px
 	text-align: center
 	font-family: $body
 	color: white
@@ -557,7 +573,7 @@ nav
 	display: block
 	transition: all 0.2s ease-in-out
 	@media #{$small}
-		font-size: 4vw
+		font-size: 3vw
 	a
 		text-decoration: none
 		color: $yellow
