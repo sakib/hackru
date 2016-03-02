@@ -52,18 +52,20 @@
 					{% endif %}
 				</h1>
 				{% if current_user.confirmed == 1 %}
-				<p class="subtext"><a data-hover="We believe that everyone should have the opportunity to hack, so HackRU runs registration on a first-come-first-serve basis rather than through application evaluations. That means registration fills up quickly, so make sure to register early!">Why am I unconfirmed?</a></p>
+				<p class="subtext"><a data-hover="You have reserved a spot in the registration queue. Closer to the event, we will be emailing registrants to confirm attendance on a first-come, first-serve basis. Since we can only admit a certain amount of people due to the fire code, you MUST confirm your attendance in order to enter.">Why am I unconfirmed?</a></p>
 				{% endif %}
 				<p>Need to change your information?</p>
 				<a href="{{ url_for('account') }}">
 					<button class="btn-ru" style="margin-top: -25px;">Manage Account</button>
 				</a>
 				<br>
+				<p>Check back with us later to confirm your attendance!</p>
 				<br>
-				<!--p>Check back with us later to confirm your attendance!</p-->
-				<a href="{{ url_for('confirm_status') }}">
+        {% if confirmation_time %}
+        <a href="{{ url_for('confirm_status') }}">
 					<button class="btn-ru" style="margin-top: -25px;">Change Confirmation Status</button>
 				</a>
+        {% endif %}
 
 				{% for message in get_flashed_messages() %}
 				<p><h1>{{ message }} </h1></p>
@@ -72,4 +74,14 @@
 			</div>
 		</section>
 	</body>
+	
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-74499803-1', 'auto');
+		ga('send', 'pageview');
+  	</script>
+	
 	</html>

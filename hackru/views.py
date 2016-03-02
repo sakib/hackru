@@ -166,7 +166,10 @@ def register():
             return redirect(url_for('dash'))
 
     except Exception as e:
-        return render_template('500.html', error=str(e))
+        if e.code is not None and int(e.code) == 413:
+            return render_template('413.html')
+        else:
+            return render_template('500.html', error=str(e))
 
 
 @app.route('/stats/<provider>', methods=['GET'])
@@ -250,7 +253,10 @@ def account():
             return redirect(url_for('register'))
 
     except Exception as e:
-        return render_template('500.html', error=str(e))
+        if e.code is not None and int(e.code) == 413:
+            return render_template('413.html')
+        else:
+            return render_template('500.html', error=str(e))
 
 
 @app.route('/authorize/<provider>')
@@ -297,15 +303,10 @@ def oauth_callback(provider):
 
 
 def allowed_file(filename):
-    return '.' in filename and \
-            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+    return '.' in filename and filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 def upload_file_handler(file):
-    # Validate file size just in case
-    file.seek(0, os.SEEK_END)
-    if file.tell() > 2 * 1024 * 1024:
-        return "File too large! Maximum file size is 2 MB."
     # Save file
     filename = str(current_user.mlh_id) + "_" + secure_filename(file.filename)
     file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -334,9 +335,9 @@ def internal_server_error(error):
     return render_template('500.html'), 500
 
 
-@app.errorhandler(Exception)
-def unhandled_exception(e):
-    return render_template('500.html'), 500
+#@app.errorhandler(Exception)
+#def unhandled_exception(e):
+#    return render_template('500.html'), 500
 
 
 """ Dummy route for load testing

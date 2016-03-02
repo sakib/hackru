@@ -23,6 +23,7 @@ Front-end by PJ Rosa :: http://pjrosa.com
 	<link href='../static/stylesheets/base.css' rel='stylesheet' type="text/css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript" src="../static/js/functions.js"></script>
+	<title>HackRU Spring 2016</title>
 </head>
 <body>
 	<nav>
@@ -82,7 +83,7 @@ Front-end by PJ Rosa :: http://pjrosa.com
                                 </div>
                             {% endfor %}
                             {% if not current_user.is_authenticated %}
-                                <p><a href="{{ url_for('oauth_authorize', provider='mlh') }}">Login with MyMLH</a></p>
+                                <p><a href="{{ url_for('oauth_authorize', provider='mlh') }}">Register with MyMLH</a></p>
                             {% else %}
                                 <!--<h2>Hi {{ current_user.name }}!</h2>=-->
                                 <a href="{{ url_for('dash') }}"> Dashboard </a>
@@ -126,7 +127,7 @@ Front-end by PJ Rosa :: http://pjrosa.com
 					<div class="text-box">
 						<div class="icon"><img src="../static/assets/img/emojis.svg"></div>
 						<h1>What's HackRU?</h1>
-						<p>HackRU is a 24-hour student hackathon at Rutgers University, New Brunswick. </p>
+						<p>HackRU is a 24-hour hackathon at Rutgers University. We welcome hundreds of students to join us in building awesome software and hardware projects. Industry experts and mentors come from all over the country to create an environment that fosters an atmosphere of learning through tech talks and one-on-one guidance. We encourage beginner and advanced hackers alike to challenge themselves and expand their skills.</p>
 					</div>
 					<!--
 					<div class="text-box">
@@ -147,7 +148,7 @@ Front-end by PJ Rosa :: http://pjrosa.com
 					<div class="text-box">
 						<div class="icon"><img src="../static/assets/img/pointer.svg"></div>
 						<h1>Sounds fun! <br>When and where is it?</h1>
-						<p>HackRU will be taking place April 16-17, 2016 at the Rutgers Athletic Center in Piscataway, NJ.</p>
+						<p>HackRU will be taking place April 16-17, 2016 at the Rutgers Athletic Center in Piscataway, NJ.<br><br><b>Address:</b><br>83 Rockafeller Road<br>Piscataway, NJ 08854</p>
 					</div>
 					<div class="map">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d619.402422583461!2d-74.44110770521334!3d40.52552845234861!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xc1b21b4e9a6fa334!2sRutgers+Athletic+Center!5e0!3m2!1sen!2sus!4v1456611983827" height="300" allowfullscreen></iframe>
@@ -219,7 +220,7 @@ Front-end by PJ Rosa :: http://pjrosa.com
 						<div class="q-text">
 							<h1>Travel Reimbursements?</h1>
 							<p>
-								Unfortunately due to university regulations, HackRU is unable to issue travel reimbursements. However, we will be sending buses to areas with lost of participants! If you want your school considered but a bus route, email info@hackru.org.
+								Unfortunately due to university regulations, HackRU is unable to issue travel reimbursements. However, we will be sending buses to areas with a lots of participants! If you want your school considered for a bus route, email info@hackru.org.
 							</p>
 						</div>
 					</div>
@@ -297,9 +298,9 @@ Front-end by PJ Rosa :: http://pjrosa.com
 					<div class="sat">
 						<h1>Saturday</h1>
 						<ul class="schedule-wrapper">
-							<li><span>11:00AM</span><span>Registration opens</span></li>
-							<li><span>12:00PM</span><span>Lunch served</span></li>
-							<li><span>1:00PM</span><span>Opening ceremony</span></li>
+							<li><span>10:00AM</span><span>Registration opens</span></li>
+							<li><span>11:00PM</span><span>Lunch served</span></li>
+							<li><span>12:00PM</span><span>Opening ceremony</span></li>
 							<li><span>1:00PM</span><span>Hacking commences</span></li>
 							<li><span>7:00PM</span><span>Dinner served</span></li>
 						</ul>
@@ -410,4 +411,14 @@ Front-end by PJ Rosa :: http://pjrosa.com
 			</div>
 		</section>
 	</body>
+	
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-74499803-1', 'auto');
+		ga('send', 'pageview');
+  	</script>
+	
 </html>
