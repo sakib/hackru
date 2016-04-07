@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     resume = db.Column(db.String(256), default=None)
     comments = db.Column(db.String(256), default=None)
     is_admin = db.Column(db.Boolean, default=False)
+    is_mentor = db.Column(db.Boolean, default=False)
     confirmed = db.Column(db.Integer, default=0)
         # 0 for Pre-Registered
         # 1 for Registered but not Confirmed

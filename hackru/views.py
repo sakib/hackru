@@ -1,12 +1,13 @@
 #!venv/bin/python
-from flask import redirect, url_for, render_template, flash, request
-from flask.ext.sqlalchemy import SQLAlchemy
+from flask import redirect, url_for, render_template, flash, request, send_from_directory
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask_mail import Message
+from hackru import app, lm, db, mail
+from werkzeug import secure_filename
 from oauth import OAuthSignIn
 from models import User
-from hackru import app, lm, db
-from werkzeug import secure_filename
-import os
+import os, smtplib
 
 
 @lm.user_loader
@@ -56,6 +57,8 @@ def confirm_status():
     try:
         if current_user.confirmed > 0:
             if request.method == 'GET':
+		if current_user.id > app.config["WAVE_LIMIT"]:
+		    return render_template('404.html')
                 return render_template('change-confirming-status.html')
         else:
             return redirect(url_for('register'))
@@ -70,9 +73,18 @@ def confirm():
     try:
         if current_user.confirmed > 0:
             if request.method == 'GET':
+		if current_user.id > app.config["WAVE_LIMIT"]:
+		    return render_template('404.html')
                 if current_user.confirmed != 2:
                     current_user.confirmed = 2
                     db.session.commit()
+
+		    #msg = Message("HackRU X Important Information",
+				  #sender="team@hackru.org", # Change this
+				  #recipients=[current_user.email])
+		    #msg.html = render_template('important_info.html')
+		    #mail.send(msg)
+
                     app.logger.info("{}[{}] at {} confirmed attendance".format(
                         current_user.name, current_user.id, request.remote_addr))
                 return render_template('confirmed.html')
@@ -89,6 +101,8 @@ def not_attending():
     try:
         if current_user.confirmed > 0:
             if request.method == 'GET':
+		if current_user.id > app.config["WAVE_LIMIT"]:
+		    return render_template('404.html')
                 if current_user.confirmed != 3:
                     current_user.confirmed = 3
                     db.session.commit()
@@ -179,7 +193,80 @@ def stats(provider):
         if current_user.is_admin:
             oauth = OAuthSignIn.get_provider(provider)
             users = oauth.get_users()
-            return render_template('stats.html', users=users)
+            
+            # Dietary Restriction counters
+            glutenfree = 0
+            vegan = 0
+            vegetarian = 0
+            eatall = 0
+            count = 0
+            hi = 'hi'
+            miscdiet = []
+            
+            # Shirt Sizes
+            shirts = {
+                'wXS': 0,
+                'wS': 0,
+                'wM': 0,
+                'wL': 0,
+                'wXL': 0,
+                'uXS': 0,
+                'uS': 0,
+                'uM': 0,
+                'uL': 0,
+                'uXL': 0
+            }
+
+            # Schools
+            stony = 0
+
+            for user in users:
+                count += 1
+                if user['dietary_restrictions'] == 'Gluten-Free':
+                    glutenfree += 1
+                elif user['dietary_restrictions'] == 'Vegan':
+                    vegan += 1
+                elif user['dietary_restrictions'] == 'Vegetarian':
+                    vegetarian += 1
+                elif user['dietary_restrictions'] == 'None':
+                    eatall += 1
+                else:
+                    miscdiet.append(user['dietary_restrictions'])
+                if user['shirt_size'] == "Women's - XS":
+                    shirts['wXS'] += 1
+                elif user['shirt_size'] == "Women's - S":
+                    shirts['wS'] += 1
+                elif user['shirt_size'] == "Women's - M":
+                    shirts['wM'] += 1
+                elif user['shirt_size'] == "Women's - L":
+                    shirts['wL'] += 1
+                elif user['shirt_size'] == "Women's - XL":
+                    shirts['wXL'] += 1
+                elif user['shirt_size'] == "Unisex - XS":
+                    shirts['uXS'] += 1
+                elif user['shirt_size'] == "Unisex - S":
+                    shirts['uS'] += 1
+                elif user['shirt_size'] == "Unisex - M":
+                    shirts['uM'] += 1
+                elif user['shirt_size'] == "Unisex - L":
+                    shirts['uL'] += 1
+                elif user['shirt_size'] == "Unisex - XL":
+                    shirts['uXL'] += 1
+                if user['school']['name'] == "Stony Brook University":
+                    stony += 1
+            
+            return render_template('stats.html', 
+                                   users=users, 
+                                   count=count, 
+                                   glutenfree=glutenfree, 
+                                   vegan=vegan, 
+                                   vegetarian=vegetarian, 
+                                   eatall=eatall, 
+                                   miscdiet=miscdiet,
+                                   shirts=shirts,
+                                   stony=stony,
+                                   current_user=current_user
+            )
         else:
             return redirect(url_for('index'))
 
@@ -242,6 +329,10 @@ def account():
                 if comments is None: comments = ""
                 else: current_user.comments = comments
 
+		if request.form.get('check') == 'mentor' and not current_user.is_mentor:
+		    current_user.is_mentor = True # Check mentor box
+		elif request.form.get('check') is None and current_user.is_mentor:
+		    current_user.is_mentor = False # Uncheck mentor box
 
                 db.session.commit()
 
@@ -257,6 +348,14 @@ def account():
             return render_template('413.html')
         else:
             return render_template('500.html', error=str(e))
+
+
+@app.route('/resumes/<res>', methods=['GET'])
+@login_required
+def resumes(res):
+    if res == current_user.resume:
+	return send_from_directory(app.config["UPLOAD_FOLDER"], res)
+    return render_template('404.html')
 
 
 @app.route('/authorize/<provider>')
@@ -340,6 +439,19 @@ def internal_server_error(error):
 #    return render_template('500.html'), 500
 
 
+@app.route('/email')
+def lelxd():
+    msg = Message("HackRU X Important Information",
+	sender="HackRU",
+	recipients=["sakib.jalal@gmail.com"])
+    msg.html = render_template('important_info.html')
+    try:
+	mail.send(msg)
+	return "woo!"
+    except Exception as e:
+	return str(e)
+
+
 """ Dummy route for load testing
 @app.route('/test', methods=["POST"])
 def test():
@@ -355,3 +467,4 @@ def test():
     else:
 	return render_template('index.html')
 """
+

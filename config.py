@@ -22,3 +22,17 @@ LOG_FORMAT = "%(levelname)s %(asctime)s --> %(message)s [in %(filename)s:%(linen
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'doc', 'docx']
 
 MAX_CONTENT_LENGTH = 2 * 1024 * 1024 # 2 MB max
+
+WAVE_LIMIT = 1000
+
+MAIL_SERVER = 'smtp.gmail.com'
+
+MAIL_PORT = 587
+
+MAIL_USE_TLS = True
+
+MAIL_USE_SSL = False
+
+MAIL_USERNAME = 'team@hackru.org'
+
+MAIL_PASSWORD = 'sesh112@ruTEAM'

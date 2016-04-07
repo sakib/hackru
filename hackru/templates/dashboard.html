@@ -59,13 +59,11 @@
 					<button class="btn-ru" style="margin-top: -25px;">Manage Account</button>
 				</a>
 				<br>
-				<p>Check back with us later to confirm your attendance!</p>
-				<br>
-        {% if confirmation_time %}
-        <a href="{{ url_for('confirm_status') }}">
+				{% if current_user.id <= 1000 %}
+				<a href="{{ url_for('confirm_status') }}">
 					<button class="btn-ru" style="margin-top: -25px;">Change Confirmation Status</button>
 				</a>
-        {% endif %}
+				{% endif %}
 
 				{% for message in get_flashed_messages() %}
 				<p><h1>{{ message }} </h1></p>
