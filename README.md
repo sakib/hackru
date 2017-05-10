@@ -1,7 +1,8 @@
-# MyMLH Flask Example
+# HackRU Spring 2016 Flask Application
 
-This is an example application that uses Flask, SQLAlchemy, and rAuth to
-authenticate users for MyMLH.
+This is the Flask application that uses Flask, SQLAlchemy, and rAuth to
+authenticate users for MyMLH and manage HackRU Spring 2016 registration
+for thousands of registrants on a real-time system.
 
 ## Setup
 
