@@ -4,6 +4,8 @@ This is the Flask application that uses Flask, SQLAlchemy, and rAuth to
 authenticate users for MyMLH and manage HackRU Spring 2016 registration
 for thousands of registrants on a real-time system.
 
+It is currently not in use, so the MLH client and secret keys are invalid.
+
 ## Setup
 
 These are the steps to get the app up and running:
