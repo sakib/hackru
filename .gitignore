@@ -6,3 +6,6 @@ venv/*
 db.sqlite
 *.log
 config.py
+*.csv
+*.tar
+*.zip
