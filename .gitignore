@@ -5,3 +5,4 @@ venv
 venv/*
 db.sqlite
 *.log
+config.py
